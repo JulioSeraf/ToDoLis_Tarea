@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de Tareas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light container mt-5">
+<section>
+    <h1 class="text-center mb-4">Mi Lista de Tareas</h1>
+
+    <div class="list-group shadow-sm">
+        <div th:each="tarea,iterStat : ${tareas}" class="list-group-item d-flex justify-content-between align-items-center">
+            <span th:text="${tarea.descripcion}" class="fs-5"></span>
+            <span class="badge bg-warning text-dark rounded-pill">Pendiente</span>
+            <a th:href="@{/eliminar(indice=${iterStat.index})}" ><button class="btn btn-primary">Eliminar</button></a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(tareas)}" class="list-group-item text-center text-muted">
+            No hay tareas pendientes. ¡Buen trabajo!
+        </div>
+    </div>
+
+
+</section>
+<section>
+    <h1 class="text-center mb-4">Inserción de nueva tarea</h1>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form th:action="@{/agregar}" th:object="${nuevaTarea}" method="post" class="d-flex">
+                <label for="descripcion" class="visually-hidden">Descripción de la tarea</label>
+                <input id="descripcion" type="text" th:field="*{descripcion}" class="form-control me-2"
+                       placeholder="¿Qué necesitas hacer hoy?" required>
+                <label for="submitNuevaTarea" class="visually-hidden">Enviar nueva tarea</label>
+                <button type="submit" id="submitNuevaTarea" class="btn btn-primary">Añadir</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="list-group shadow-sm"></div>
+</section>
+
+
+</body>
+</html>
